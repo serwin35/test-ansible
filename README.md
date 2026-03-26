@@ -1,6 +1,6 @@
 # CT-Ansible
 
-Ansible playbooks and roles for provisioning CodeTronic infrastructure — multi-node Proxmox cluster, Docker hosts, Cloudflare tunnels, and shared storage across two locations.
+Ansible playbooks and roles for provisioning CT infrastructure — multi-node Proxmox cluster, Docker hosts, Cloudflare tunnels, and shared storage across two locations.
 
 ## Infrastructure Overview
 
