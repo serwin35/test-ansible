@@ -1,0 +1,32 @@
+---
+- name: Add Cloudflare GPG key
+  get_url:
+    url: https://pkg.cloudflare.com/cloudflare-main.gpg
+    dest: /usr/share/keyrings/cloudflare-main.gpg
+    mode: "0644"
+
+- name: Add cloudflared repository
+  copy:
+    content: "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared bookworm main\n"
+    dest: /etc/apt/sources.list.d/cloudflared.list
+    mode: "0644"
+
+- name: Install cloudflared
+  apt:
+    name: cloudflared
+    state: present
+    update_cache: true
+
+- name: Install cloudflared as service
+  command: cloudflared service install {{ cloudflare_tunnel_token }}
+  args:
+    creates: /etc/systemd/system/cloudflared.service
+  when: cloudflare_tunnel_token != ""
+  notify: restart cloudflared
+
+- name: Enable and start cloudflared
+  service:
+    name: "{{ cloudflare_tunnel_service }}"
+    state: started
+    enabled: true
+  when: cloudflare_tunnel_token != ""

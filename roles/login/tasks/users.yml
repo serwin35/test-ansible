@@ -1,0 +1,17 @@
+---
+- name: Ensure user accounts exist
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ '/bin/bash' if item.shell | default(false) else '/usr/sbin/nologin' }}"
+    groups: "{{ 'sudo' if item.sudo | default(false) else '' }}"
+    append: true
+    state: present
+  loop: "{{ users }}"
+
+- name: Add SSH authorized keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', item.name + '.pub') }}"
+    state: present
+  loop: "{{ users }}"
+  ignore_errors: true

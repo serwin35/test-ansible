@@ -1,0 +1,7 @@
+---
+shared_dir: /mnt/devops-shared
+shared_smb_name: devops-shared
+# Obie sieci: LAN + VLAN prywatny
+shared_nfs_clients:
+  - "192.168.0.0/24"
+  - "10.10.10.0/24"

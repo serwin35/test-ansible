@@ -1,0 +1,8 @@
+---
+- include_tasks: install.yml
+
+- name: Add serwin to docker group
+  user:
+    name: serwin
+    groups: docker
+    append: true

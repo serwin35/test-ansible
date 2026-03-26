@@ -1,0 +1,4 @@
+---
+proxmox_no_subscription_repo: true
+proxmox_remove_enterprise_repo: true
+proxmox_update: true

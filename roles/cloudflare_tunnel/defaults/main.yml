@@ -1,0 +1,3 @@
+---
+cloudflare_tunnel_token: ""   # ustaw w host_vars/{host}/secrets.yml (Vault)
+cloudflare_tunnel_service: cloudflared

@@ -1,0 +1,5 @@
+---
+proxmox_no_subscription_repo: true
+proxmox_remove_enterprise_repo: true
+# Terraform (bpg/proxmox) używa root@SSH do operacji na dyskach VM
+disable_root_login: false

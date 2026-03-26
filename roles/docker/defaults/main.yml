@@ -1,0 +1,3 @@
+---
+docker_key_path: /etc/apt/keyrings/docker.asc
+docker_compose_projects: []

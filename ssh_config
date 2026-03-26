@@ -1,0 +1,19 @@
+Host macpro-pve
+    HostName 192.168.0.120
+    User serwin
+    IdentityFile ~/.ssh/id_ed25519
+
+Host pve-2
+    HostName 192.168.0.100
+    User serwin
+    IdentityFile ~/.ssh/id_ed25519
+
+Host docker-host
+    HostName 192.168.0.139
+    User serwin
+    IdentityFile ~/.ssh/id_ed25519
+
+Host ubuntu-lab
+    HostName 192.168.0.101
+    User serwin
+    IdentityFile ~/.ssh/id_ed25519

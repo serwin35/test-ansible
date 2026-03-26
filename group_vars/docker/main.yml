@@ -1,0 +1,5 @@
+---
+docker_compose_projects:
+  - portainer
+  - uptime-kuma
+  - nginx-proxy-manager

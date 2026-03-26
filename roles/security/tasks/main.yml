@@ -1,0 +1,23 @@
+---
+- name: Install security packages
+  apt:
+    name:
+      - fail2ban
+      - ufw
+      - unattended-upgrades
+    state: present
+    update_cache: true
+
+- include_tasks: fail2ban.yml
+
+- name: Allow SSH before enabling UFW
+  ufw:
+    rule: allow
+    port: "{{ ssh_port | default(22) }}"
+    proto: tcp
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming

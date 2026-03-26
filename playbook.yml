@@ -1,0 +1,63 @@
+---
+# ── Proxmox: napraw repozytoria ZANIM security uruchomi apt ───────
+- hosts: proxmox
+  roles:
+    - proxmox
+
+# ── Bazowa konfiguracja wszystkich hostów ─────────────────────────
+- hosts: all
+  roles:
+    - hostname
+    - login
+    - security
+
+# ── Shared storage na macpro-pve (Samba dla Windows, virtiofs dla reszty) ─
+- hosts: macpro-pve
+  roles:
+    - shared_storage
+
+# ── CF tunnel — cloudflared tylko na pve-2 (tam są serwisy tunelu) ─
+- hosts: pve-2
+  roles:
+    - cloudflare_tunnel
+
+# ── Docker LXC ────────────────────────────────────────────────────
+- hosts: docker
+  roles:
+    - docker
+
+# ── DevOps VMs — konfiguracja po instalacji OS ────────────────────
+- hosts: ubuntu-devops
+  roles:
+    - docker
+
+- hosts: devops
+  tasks:
+    - name: Create mount point
+      file:
+        path: /mnt/devops-shared
+        state: directory
+      when: ansible_system in ["Linux", "FreeBSD"]
+
+    - name: Load virtiofs kernel module on boot (FreeBSD)
+      lineinfile:
+        path: /etc/rc.conf
+        line: 'kld_list="virtio_fs"'
+        state: present
+      when: ansible_system == "FreeBSD"
+
+    - name: Load virtiofs kernel module now (FreeBSD)
+      command: kldload virtio_fs
+      when: ansible_system == "FreeBSD"
+      failed_when: false
+
+    - name: Mount virtiofs shared folder (Linux / FreeBSD)
+      mount:
+        path: /mnt/devops-shared
+        src: devops-shared
+        fstype: virtiofs
+        opts: defaults
+        state: mounted
+      when: ansible_system in ["Linux", "FreeBSD"]
+    # Windows: zmapuj \\192.168.0.120\devops-shared w Eksploratorze lub:
+    #   net use Z: \\192.168.0.120\devops-shared

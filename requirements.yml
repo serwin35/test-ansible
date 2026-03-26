@@ -1,0 +1,7 @@
+collections:
+  - name: community.general
+    version: "12.3.0"
+  - name: community.proxmox
+    version: "1.5.0"
+  - name: ansible.posix
+    version: "2.1.0"

@@ -1,0 +1,15 @@
+[global]
+   workgroup = DEVOPS
+   server string = macpro-pve shared storage
+   security = user
+   map to guest = Bad User
+   guest account = nobody
+
+[{{ shared_smb_name }}]
+   path = {{ shared_dir }}
+   browseable = yes
+   writable = yes
+   guest ok = yes
+   create mask = 0777
+   directory mask = 0777
+   force user = nobody

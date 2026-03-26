@@ -1,0 +1,7 @@
+---
+private_ip: 192.168.0.100
+proxmox_node: pve-2
+
+# Tunnel token — pobierz z: cd CT-Terraform && make output | grep ldz_tunnel_secret
+# Zapisz zaszyfrowany: ansible-vault encrypt_string 'TOKEN' --name cloudflare_tunnel_token
+# cloudflare_tunnel_token: !vault |...

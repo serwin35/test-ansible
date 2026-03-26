@@ -1,0 +1,27 @@
+---
+all:
+  children:
+
+    # ── Proxmox nodes ─────────────────────────────────────────────
+    proxmox:
+      hosts:
+        macpro-pve:
+          ansible_host: 192.168.0.120
+        pve-2:
+          ansible_host: 192.168.0.100
+
+    # ── LXC containers ────────────────────────────────────────────
+    docker:
+      hosts:
+        docker-host:
+          ansible_host: 192.168.0.139   # LXC 903 on pve-2
+
+    # ── DevOps VMs on macpro-pve ──────────────────────────────────
+    devops:
+      hosts:
+        ubuntu-devops:
+          ansible_host: 192.168.0.101   # TODO: zaktualizować po instalacji OS
+        freebsd-devops:
+          ansible_host: 192.168.0.102   # TODO: zaktualizować po instalacji OS
+        windows-devops:
+          ansible_host: 192.168.0.103   # TODO: zaktualizować po instalacji OS

@@ -1,0 +1,45 @@
+---
+- name: Remove pve enterprise repo (legacy .list + new .sources format)
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/pve-enterprise.list
+    - /etc/apt/sources.list.d/pve-enterprise.sources
+  when: proxmox_remove_enterprise_repo
+
+- name: Remove ceph enterprise repo (legacy .list + new .sources format)
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/ceph.list
+    - /etc/apt/sources.list.d/ceph.sources
+  when: proxmox_remove_enterprise_repo
+
+- name: Add pve no-subscription repo
+  copy:
+    content: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription\n"
+    dest: /etc/apt/sources.list.d/pve-no-subscription.list
+    owner: root
+    group: root
+    mode: "0644"
+  when: proxmox_no_subscription_repo
+
+- name: Update and upgrade packages
+  apt:
+    update_cache: true
+    upgrade: dist
+  when: proxmox_update
+
+- name: Install useful tools
+  apt:
+    name:
+      - htop
+      - iotop
+      - ncdu
+      - curl
+      - wget
+      - git
+      - jq
+    state: present

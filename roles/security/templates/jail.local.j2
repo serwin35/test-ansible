@@ -1,0 +1,8 @@
+[DEFAULT]
+maxretry  = {{ fail2ban_maxretry }}
+bantime   = {{ fail2ban_bantime }}
+findtime  = {{ fail2ban_findtime }}
+
+[sshd]
+enabled = true
+port    = {{ ssh_port | default(22) }}

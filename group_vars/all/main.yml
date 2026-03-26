@@ -1,0 +1,9 @@
+---
+users:
+  - name: serwin
+    sudo: true
+    shell: true
+
+dns_servers:
+  - 1.1.1.1
+  - 8.8.8.8
